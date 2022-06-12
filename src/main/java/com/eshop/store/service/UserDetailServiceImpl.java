@@ -2,8 +2,10 @@ package com.eshop.store.service;
 
 import com.eshop.store.dto.CustomUserDetails;
 import com.eshop.store.entity.User;
+import com.eshop.store.repositories.RoleRepository;
 import com.eshop.store.repositories.UserRepository;
 
+import com.eshop.store.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +20,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -25,8 +30,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
-        boolean enable = user.getStatus() == UserService.ACTIVE ? true : false;
+        for (String roleName : roleRepository.findRoleNameByUserId(user.getId())) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(roleName));
+        }
+        boolean enable = user.getStatus() == Const.UserStatus.ACTIVE ? true : false;
         CustomUserDetails customUserDetails = new CustomUserDetails(user.getEmail(), user.getPassword(), enable, grantedAuthorities);
         customUserDetails.setId(user.getId());
         customUserDetails.setName(user.getName());

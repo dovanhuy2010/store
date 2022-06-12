@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 public interface RoleService {
     Iterable<Role> findAll();
     Role findById(Integer id);
+    long count();
+
 }

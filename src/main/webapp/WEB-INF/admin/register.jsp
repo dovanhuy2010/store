@@ -294,7 +294,7 @@
         // clearTextBox();
 
         $.ajax({
-            url: '/register',
+            url: '/_admin/register',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -302,11 +302,10 @@
                 email: formArr[1].value,
                 phone: formArr[2].value,
                 password: formArr[3].value,
-                idRole: 2
             })
         }).done(function (data) {
             if (data != null) {
-                window.location.replace("admin/verify");
+                window.location.replace("_admin/login");
             } else {
                 alert("Form invalid")
             }

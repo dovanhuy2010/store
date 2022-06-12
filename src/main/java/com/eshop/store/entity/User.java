@@ -1,10 +1,11 @@
 package com.eshop.store.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.eshop.store.dto.UserDto;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -41,10 +42,7 @@ public class User implements Serializable {
     @Column(name = "status", nullable = false, columnDefinition = "integer default 0")
     private Integer status;
 
-    // Many to One
-    @ManyToOne
-    @JoinColumn(name = "id_Role", referencedColumnName = "id")
-    @JsonBackReference
-    // thông qua khóa ngoại
-    private Role role;
+    @Transient              // @Transient : khi query t có thể bỏ qua dòng này không query ra
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    List<UserRole> userRoleList;
 }

@@ -21,4 +21,10 @@ public class RoleServiceImpl implements RoleService {
         Optional<Role> role = roleRepository.findById(id);
         return role.get();
     }
+
+    @Override
+    public long count() {
+        long count = roleRepository.count()-1;
+        return count;
+    }
 }

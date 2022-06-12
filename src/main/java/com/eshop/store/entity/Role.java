@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,18 +25,12 @@ public class Role implements Serializable {
     @Column(name = "name", nullable = false, length = 20)
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
-    @JsonBackReference
-    private Set<User> users = new HashSet<User>();
+    @Transient
+    @OneToMany(mappedBy = "roleId", fetch = FetchType.LAZY)
+    private List<UserRole> userRoleList;
 
     @Override
     public String toString() {
-
         return roleName;
-//        return "Role{" +
-//                "role=" + role +
-//                ", roleName='" + roleName + '\'' +
-//                ", users=" + users +
-//                '}';
     }
 }

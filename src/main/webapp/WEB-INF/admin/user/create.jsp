@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="<c:url value='/template/admin/vendors/css/vendors.min.css'/>">
     <link rel="stylesheet" href="<c:url value='/template/admin/vendors/css/charts/apexcharts.css'/>">
     <link rel="stylesheet" href="<c:url value='/template/admin/vendors/css/extensions/toastr.min.css'/>">
+    <link rel="stylesheet" href="<c:url value='/template/admin/vendors/css/forms/select/select2.min.css'/>">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -120,17 +121,18 @@
                                                             name="contact" placeholder="Password" path="password"/>
                                             </div>
                                         </div>
+
                                             <%--roleName--%>
-                                        <div class="mb-1">
-                                            <label class="form-label" for="idRole">Role</label>
-                                            <form:select class="form-select" id="idRole" path="idRole">
-                                                <c:forEach items="${listRole}" var="role">
-                                                    <option value="${role.id}" name="${role}"
-                                                            <c:if test="${role.id ==user.idRole}">selected</c:if>
-                                                    >${role.roleName}</option>
-                                                </c:forEach>
-                                            </form:select>
-                                        </div>
+<%--                                        <div class="mb-1">--%>
+<%--                                            <label class="form-label" for="idRole">Role</label>--%>
+<%--                                            <form:select class="form-select" id="idRole" path="">--%>
+<%--                                                <c:forEach items="${listRole}" var="role">--%>
+<%--                                                    <option value="${role.id}" name="${role}"--%>
+<%--                                                            <c:if test="${role.id ==user.idRole}">selected</c:if>--%>
+<%--                                                    >${role.roleName}</option>--%>
+<%--                                                </c:forEach>--%>
+<%--                                            </form:select>--%>
+<%--                                        </div>--%>
                                             <%--roleName--%>
 
 
@@ -190,6 +192,14 @@
 <script src="<c:url value='/template/admin/js/scripts/pages/dashboard-ecommerce.min.js'/>"></script>
 <!-- END: Page JS-->
 
+<!-- BEGIN: Page JS-->
+<script src="<c:url value='/template/admin/js/scripts/forms/form-select2.min.js'/>"></script>
+<!-- END: Page JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="<c:url value='/template/admin/vendors/js/forms/select/select2.full.min.js'/>"></script>
+<!-- END: Page Vendor JS-->
+
 <%--jquery ajax--%>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -203,6 +213,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <%--<script src="<c:url value="/template/admin/user/js/createUser.js"/>"/>--%>
+
+
 
 <%--jquery ajax--%>
 <script>

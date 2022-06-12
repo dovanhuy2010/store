@@ -111,7 +111,7 @@
                                         <th>${user.name}</th>
                                         <th>${user.email}</th>
                                         <th>${user.phone}</th>
-                                        <th>${user.role}</th>
+                                        <th>${user.name}</th>
 
                                         <th>
                                             <a href="<c:url value='/admin/user/update/${user.id}'/>"
@@ -169,12 +169,19 @@
 <!-- BEGIN: Page JS-->
 <script src="<c:url value='/template/admin/js/scripts/pages/dashboard-ecommerce.min.js'/>"></script>
 <!-- END: Page JS-->
+<!-- BEGIN: Page JS-->
+<script src="<c:url value='/template/admin/js/scripts/customizerJS.js'/>"></script>
+<!-- END: Page JS-->
 <script>
-    $(window).on('load', function () {
+
+
+    $(document).ready(function () {
         if (feather) {
             feather.replace({width: 14, height: 14});
         }
+        checkKey();
     })
+
 </script>
 </body>
 </html>

@@ -1,0 +1,46 @@
+spring:
+  redis:
+#    host: 127.0.0.1 192.168.122.1
+    host: 192.168.122.1
+    port: 6379
+    ssl: false
+    timeout: 12m
+    jedis:
+      pool:
+        max-active: 1
+        max-idle: 25
+        max-wait: 30000ms
+        min-idle: 5
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: none
+  mail:
+    host: smtp.gmail.com
+    username: dovanhuy2303@gmail.com
+    port: '587'
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+          auth: 'true'
+    password: dovanhuy
+
+  session:
+    store-type: redis
+  datasource:
+    password: 12345678$
+    username: root
+    url: jdbc:mysql://localhost:3306/demologin?useSSL=false
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+server:
+  servlet:
+    session:
+#      timeout: 20s
+      timeout: 7200s
