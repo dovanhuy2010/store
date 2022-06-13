@@ -10,6 +10,8 @@ import java.util.List;
 @Service
 public interface UserRoleService {
     List<UserRoleDto> finByUserId(int id);
+
     DataRes saveUserRole(List<UserRoleDto> userRoleDtoList, int userId);
-//    void deleteBy
+
+    DataRes deleteUserRoleByUserId(int userId);
 }

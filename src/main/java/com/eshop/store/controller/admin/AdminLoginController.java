@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("_admin")
@@ -77,9 +79,11 @@ public class AdminLoginController {
 
         model.addAttribute("dataRes",dataRes);
         if(Const.DataRes.SUCCESS.getCode() == dataRes.getCode()){
+            List<UserRoleDto> userRoleDtos = new ArrayList<>();
             UserRoleDto userRoleDto = new UserRoleDto();
             userRoleDto.setRoleId(Const.ROLE_OTHER);
-            userRoleService.saveUserRole(userRoleDto,(int)dataRes.getData());
+            userRoleDtos.add(userRoleDto);
+            userRoleService.saveUserRole(userRoleDtos,(int)dataRes.getData());
         }
         return "redirect:/_admin/login";// đọc text từ file jsp và render ra html
     }

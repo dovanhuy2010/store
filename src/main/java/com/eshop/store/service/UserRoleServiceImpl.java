@@ -38,11 +38,25 @@ public class UserRoleServiceImpl implements UserRoleService{
         try {
             for (UserRoleDto userRoleDto : userRoleDtoList){
                 UserRole userRole = userRoleDto.mapperUserRole(userId);
+                userRoleRepository.save(userRole);
             }
-//            userRoleRepository.save(userRole);
             return new DataRes(userRoleDtoList, Const.DataRes.SUCCESS.getMessage(),Const.DataRes.SUCCESS.getCode());
         }catch (Exception e){
             return new DataRes("",Const.DataRes.INTERNAL_SERVER_ERROR.getMessage(),Const.DataRes.INTERNAL_SERVER_ERROR.getCode());
         }
+    }
+
+    @Override
+    public DataRes deleteUserRoleByUserId(int userId) {
+        List<UserRoleDto> userRoleDtos = userRoleRepository.findByUserId(userId);
+        if(CollectionUtils.isEmpty(userRoleDtos)){
+            return new DataRes();
+        }
+        try {
+            userRoleRepository.deleteByUserId(userId);
+        }catch (Exception e){
+            return new DataRes("",Const.DataRes.INTERNAL_SERVER_ERROR.getMessage(),Const.DataRes.INTERNAL_SERVER_ERROR.getCode());
+        }
+        return null;
     }
 }

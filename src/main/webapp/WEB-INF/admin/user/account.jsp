@@ -428,7 +428,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     idRole: ''
                 })
             }).done(function (data) {
-                window.location.replace("/admin/Account-setting");
+                window.location.replace("/admin/account/redirect-account-page");
             });
         }
     });
@@ -532,7 +532,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     idRole: ''
                 })
             }).done(function (data) {
-                window.location.replace("/admin/Account-setting");
+                window.location.replace("/admin/account/redirect-account-page");
             });
         }
     })

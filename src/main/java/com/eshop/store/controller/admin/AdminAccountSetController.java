@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 
 
 @Controller
-@RequestMapping("account-admin")
+@RequestMapping("admin/account")
 @RequiredArgsConstructor
 public class AdminAccountSetController {
 

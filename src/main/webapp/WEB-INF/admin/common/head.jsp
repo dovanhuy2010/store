@@ -82,7 +82,7 @@
                                                                              data-feather="message-square"></i>
                     Chats</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<c:url value='/admin/Account-setting'/>"><i class="me-50"
+                    <a class="dropdown-item" href="<c:url value='/admin/account/redirect-account-page'/>"><i class="me-50"
                                                                                                   data-feather="settings"></i>
                         Settings</a><a
                             class="dropdown-item" href="page-pricing.html"><i class="me-50"
