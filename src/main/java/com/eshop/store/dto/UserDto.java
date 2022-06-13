@@ -1,5 +1,6 @@
 package com.eshop.store.dto;
 
+import com.eshop.store.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,14 @@ public class UserDto {
     String email;
     String phone;
     String password;
-    Integer idRole;
+
+    public User mapperUser(){
+        User user = new User();
+        user.setId(id);
+        user.setName(name);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setPassword(password);
+        return user;
+    }
 }

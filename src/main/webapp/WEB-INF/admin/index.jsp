@@ -68,9 +68,8 @@
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
         <div class="content-header row">
+            <h1>hello</h1>
         </div>
-
-
     </div>
 </div>
 <!-- END: Content-->
@@ -105,12 +104,19 @@
 <!-- BEGIN: Page JS-->
 <script src="<c:url value='/template/admin/js/scripts/pages/dashboard-ecommerce.min.js'/>"></script>
 <!-- END: Page JS-->
+
+<!-- BEGIN: CustomizerJS-->
+<script src="<c:url value='/template/admin/js/scripts/customizerJS.js'/>"></script>
+<!-- END: CustomizerJS-->
 <script>
-    $(window).on('load', function () {
+
+    $(document).ready(function () {
         if (feather) {
             feather.replace({width: 14, height: 14});
         }
+        checkKey();
     })
+
 </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.eshop.store.config;
 
+import com.eshop.store.dto.CustomUserDetails;
 import com.eshop.store.service.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailServiceImpl();
@@ -35,6 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
         http.authorizeRequests().antMatchers("/admin/user/**").access("hasRole('ROLE_ADMIN')");
         http
                 .authorizeRequests()
@@ -46,8 +51,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/_admin/doLogin")// api đăng ký để nhận xử lý luoong login
                 .usernameParameter("email")// name trong form login
                 .passwordParameter("password")// mật khẩu trong forrm login
-                .defaultSuccessUrl("/admin/home")// đường dẫn mặc định sau khi login thành công
+                .defaultSuccessUrl("/admin")// đường dẫn mặc định sau khi login thành công
                 .failureUrl("/_admin/login?message=error")  // trả về nếu login lỗi
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .deleteCookies("JSESSIONID")
+//                .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403"); //khi không đủ quyền sẽ redirect đến trang 403
@@ -56,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/api/**");
-
     }
+
+
 }

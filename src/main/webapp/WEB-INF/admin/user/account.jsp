@@ -197,7 +197,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <!--/ header section -->
 
                                         <!-- form -->
-                                        <form:form class="validate-form mt-2" modelAttribute="accoutSet">
+                                        <form:form class="validate-form mt-2" id="form-account"
+                                                   modelAttribute="accountSet">
                                             <div class="row">
                                                 <div class="col-12 col-sm-6">
                                                     <div class="mb-1">
@@ -211,6 +212,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 path="name"
                                                         />
                                                     </div>
+                                                    <div class="invalid-feedback" style="display: block;"></div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <div class="mb-1">
@@ -224,6 +226,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 path="email"
                                                         />
                                                     </div>
+                                                    <div class="invalid-feedback" style="display: block;"></div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
                                                     <div class="mb-1">
@@ -237,21 +240,24 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 path="phone"
                                                         />
                                                     </div>
+                                                    <div class="invalid-feedback" style="display: block;"></div>
                                                 </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <form:input path="id" id="account-id" type="hidden"/>
-                                                </div>
+                                                    <%--                                                <div class="col-12 col-sm-6">--%>
+                                                    <%--                                                    <form:input path="id" id="account-id" type="hidden"/>--%>
+                                                    <%--                                                </div>--%>
 
-                                                <div class="col-12">
-                                                    <button type="submit" class="btn btn-primary mt-2 me-1">Save
-                                                        changes
-                                                    </button>
-                                                    <button type="reset" class="btn btn-outline-secondary mt-2">Cancel
-                                                    </button>
-                                                </div>
+
                                             </div>
                                         </form:form>
                                         <!--/ form -->
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary mt-2 me-1"
+                                                    id="btn-formAccount">Save
+                                                changes
+                                            </button>
+                                            <button type="reset" class="btn btn-outline-secondary mt-2">Cancel
+                                            </button>
+                                        </div>
                                     </div>
                                     <!--/ general tab -->
 
@@ -282,6 +288,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 <i data-feather="eye"></i>
                                                             </div>
                                                         </div>
+                                                        <div class="invalid-feedback" style="display: block;"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,6 +309,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                 <i data-feather="eye"></i>
                                                             </div>
                                                         </div>
+                                                        <div class="invalid-feedback" style="display: block;"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6">
@@ -320,13 +328,15 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                     data-feather="eye"></i></div>
                                                             <p id="old-password-message"></p>
                                                         </div>
+                                                        <div class="invalid-feedback" style="display: block;"></div>
                                                     </div>
                                                 </div>
 
                                             </div>
                                         </form>
                                         <div class="col-12">
-                                            <button type="submit" class="btn btn-primary me-1 mt-1">Save
+                                            <button type="submit" class="btn btn-primary me-1 mt-1"
+                                                    id="btn-save-password">Save
                                                 changes
                                             </button>
                                             <button type="reset" class="btn btn-outline-secondary mt-1">Cancel
@@ -387,101 +397,145 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<c:url value='/template/admin/js/scripts/pages/page-account-settings.min.js'/>"></script>
 <!-- END: Page JS-->
 
+<!-- BEGIN: CustomizerJS-->
+<script src="<c:url value='/template/admin/js/scripts/customizerJS.js'/>"></script>
+<!-- END: CustomizerJS-->
 <script>
-    var check = true;
-    $(window).on('load', function () {
+    $(document).ready(function () {
+
         if (feather) {
             feather.replace({width: 14, height: 14});
         }
+        checkKey();
+
     })
 
     //
-    // $('#account-new-password').on('click', function () {
-    //     var isValid = ValidateAccountPassword();
-    //     var checkPassword = false;
-    //     // if ('#account-old-password'.val().trim() == "") {
-    //     //     $('#account-old-password').css('border-color', 'Red');
-    //     //     $('#old-password-message').text('Please enter a valid password');
-    //     //     isValid = false;
-    //     // } else {
-    //     //     $('#account-old-password').css('border-color', 'lightgrey');
-    //     //     $('#old-password-message').text('');
-    //     //     isValid = true;
-    //     // }
-    //     if (isValid) {
-    //         $.ajax({
-    //             url: '/admin/checkPassword/' + '#account-id'.val(),
-    //             type: 'POST',
-    //             contentType: "application/json",
-    //             data: '#account-old-password'.val()
-    //         }).done(function (data) {
-    //             checkPassword = data;
-    //         });
-    //     }
-    //     if (checkPassword == true) {
-    //         $('#account-old-password').css('border-color', 'lightgrey');
-    //         $('#old-password-message').text('');
-    //         check = true;
-    //     } else {
-    //         $('#account-old-password').css('border-color', 'red');
-    //         $('#old-password-message').text('Incorrect password');
-    //         check = false;
-    //     }
-    // })
-
-    //function check pass với conf pass
-    var checkPass = function () {
-        var isValid = true;
-        if ('#new-password'.val().trim() == "") {
-            $('#account-old-password').css('border-color', 'Red');
-            $('#old-password-message').text('Please enter a valid password');
-            isValid = false;
-        } else {
-            $('#old-password').css('border-color', 'lightgrey');
-            $('#old-password-message').text('');
-            isValid = true;
+    $(document).on('click', '#btn-save-password', function () {
+        const formArr = $("#form-account").serializeArray();
+        const newPass = $('#account-new-password').val();
+        if (checkValidateAccountPassword()) {
+            $.ajax({
+                url: '/admin/account-update',
+                type: 'PUT',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    id: '',
+                    name: formArr[0].value,
+                    email: formArr[1].value,
+                    phone: formArr[2].value,
+                    password: newPass,
+                    idRole: ''
+                })
+            }).done(function (data) {
+                window.location.replace("/admin/account/redirect-account-page");
+            });
         }
-    }
-    function ValidateAccountPassword() {
-        var check = true;
+    });
 
+
+
+    function checkValidateAccountPassword() {
+        var check = true;
         var _oldPass = $('#account-old-password').val();
         var _newPass = $('#account-new-password').val();
         var _retypePass = $('#account-retype-new-password').val();
-
-        if (_oldPass === '') {
-            $('#account-old-password').parent().next().html('Vui lòng nhập mật khẩu cũ!');
-            check = false;
-        } else if (!ValidationPassword(_oldPass)) {
-            $('#account-old-password').parent().next().html('Mật khẩu không chính xác!');
+        if (_oldPass == '') {
+            $('#account-old-password').css('border-color', 'Red');
+            $('#account-old-password').parent().next().html('Please enter a valid password!');
             check = false;
         } else {
-            $('#account-old-password').parent().next().html('');
+            $.ajax({
+                url: '/admin/Account-check-Password',
+                type: 'POST',
+                contentType: "application/json",
+                data: $('#account-old-password').val()
+            }).done(function (data) {
+                if (data == true) {
+                    $('#account-old-password').css('border-color', 'rgb(33, 230, 11)');
+                    $('#account-old-password').parent().next().html('');
+                } else {
+                    $('#account-old-password').css('border-color', 'red');
+                    $('#account-old-password').parent().next().html('old password incorrect!');
+                    check = false;
+                }
+            });
         }
 
         if (_newPass === '') {
-            $('#account-new-password').parent().next().html('Vui lòng nhập mật khẩu mới!');
-            check = false;
-        } else if (!_newPass.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)) {
-            $('#account-new-password').parent().next().html('Mật khẩu ít nhất 8 ký tự và có ít nhất 1 chữ số, 1 chữ hoa và 1 chữ thường!');
+            $('#account-new-password').css('border-color', 'Red');
+            $('#account-new-password').parent().next().html('Please enter a valid password!');
             check = false;
         } else {
+            $('#account-new-password').css('border-color', 'lightgrey');
             $('#account-new-password').parent().next().html('');
         }
 
         if (_retypePass === '') {
-            $('#account-retype-new-password').parent().next().html('Vui lòng nhập mật khẩu!');
+            $('#account-retype-new-password').css('border-color', 'Red');
+            $('#account-retype-new-password').parent().next().html('Please enter a valid password!');
             check = false;
         } else if (_retypePass != _newPass) {
-            $('#account-retype-new-password').parent().next().html('Không khớp với mật khẩu mới!');
+            $('#account-retype-new-password').css('border-color', 'Red');
+            $('#account-retype-new-password').parent().next().html('Does not match the new password!');
             check = false;
         } else {
+            $('#account-retype-new-password').css('border-color', 'lightgrey');
             $('#account-retype-new-password').parent().next().html('');
-
         }
 
         return check;
     }
+
+
+    //PUT account
+
+    $(document).on('click', '#btn-formAccount', function () {
+        var formArr = $("#form-account").serializeArray();
+        var isValid = true;
+
+        if ($('#account-name').val().trim() == "") {
+            $('#account-name').css('border-color', 'Red');
+            $('#account-name').parent().next().html('Please enter a valid name!');
+            isValid = false;
+        } else {
+            $('#account-name').css('border-color', 'lightgrey');
+            $('#account-name').parent().next().html('');
+        }
+        if ($('#account-e-mail').val().trim() == "") {
+            $('#account-e-mail').css('border-color', 'Red');
+            $('#account-e-mail').parent().next().html('Please enter a valid email!');
+            isValid = false;
+        } else {
+            $('#account-e-mail').css('border-color', 'lightgrey');
+            $('#account-e-mail').parent().next().html('');
+        }
+        if ($('#account-phone').val().trim() == "") {
+            $('#account-phone').css('border-color', 'Red');
+            $('#account-phone').parent().next().html('Please enter a valid phone!');
+            isValid = false;
+        } else {
+            $('#account-phone').css('border-color', 'lightgrey');
+            $('#account-phone').parent().next().html('');
+        }
+        if (isValid == true) {
+            $.ajax({
+                url: '/admin/Account-update',
+                type: 'PUT',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    id: '',
+                    name: formArr[0].value,
+                    email: formArr[1].value,
+                    phone: formArr[2].value,
+                    password: '',
+                    idRole: ''
+                })
+            }).done(function (data) {
+                window.location.replace("/admin/account/redirect-account-page");
+            });
+        }
+    })
 </script>
 </body>
 <!-- END: Body-->

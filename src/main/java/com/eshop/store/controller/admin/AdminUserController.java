@@ -1,13 +1,16 @@
 package com.eshop.store.controller.admin;
 
+import com.eshop.store.dto.DataRes;
 import com.eshop.store.dto.UserDto;
-import com.eshop.store.entity.User;
 import com.eshop.store.service.RoleService;
+import com.eshop.store.service.UserRoleService;
 import com.eshop.store.service.UserService;
+import com.eshop.store.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +30,16 @@ public class AdminUserController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String getAllUser(Model model) {
         model.addAttribute("data", userService.findAll());
+        model.addAttribute("");
         return "admin/user/user";
     }
 
@@ -42,19 +52,19 @@ public class AdminUserController {
     }
 
     @RequestMapping(value = "/user/save", method = RequestMethod.POST)
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto, RedirectAttributes redirect) {
-        userService.saveUser(userDto);
+    public ResponseEntity<DataRes> createUser(@RequestBody UserDto userDto, RedirectAttributes redirect) {
+        String pass = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(pass);
+        DataRes dataRes = userService.saveUser(userDto, Const.UserMethod.SAVE);
         redirect.addFlashAttribute("successMessage", "Create user successfully!");
-        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(dataRes, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/user/update/{id}", method = RequestMethod.GET)
     public String getUserById(@PathVariable("id") Integer id, Model model) {
-
         UserDto userDto = userService.findById(id);
-
-
         model.addAttribute("listRole", roleService.findAll());
+        model.addAttribute("userRole",userRoleService.finByUserId(id));
         model.addAttribute("action", "Edit");
         model.addAttribute("user", userDto);
 
@@ -62,9 +72,10 @@ public class AdminUserController {
     }
 
     @RequestMapping(value = "user/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<UserDto> updateUsers(@RequestBody UserDto userDto, RedirectAttributes redirect) {
-        userService.saveUser(userDto);
-        redirect.addFlashAttribute("successMessage", "Update user successfully!");
+    public ResponseEntity<UserDto> updateUsers(@RequestBody UserDto userDto) {
+        String pass = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(pass);
+        userService.updateUser(userDto);
         return new ResponseEntity<>(userDto, HttpStatus.CREATED);
     }
 

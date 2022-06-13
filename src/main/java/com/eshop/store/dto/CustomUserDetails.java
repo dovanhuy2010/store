@@ -1,11 +1,9 @@
 package com.eshop.store.dto;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
-import java.util.Set;
 
 
 public class CustomUserDetails extends User {

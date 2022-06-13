@@ -157,7 +157,7 @@
                                 <div class="mb-1">
                                     <div class="d-flex justify-content-between">
                                         <label class="form-label" for="password">Password</label>
-                                        <a href="/forgot-Password">
+                                        <a href="/_admin/forgot-Password">
                                             <small>Forgot Password?</small>
                                         </a>
                                     </div>
@@ -187,7 +187,7 @@
 
                             <p class="text-center mt-2">
                                 <span>New on our platform?</span>
-                                <a href="<c:url value="/register"/>">
+                                <a href="<c:url value="/_admin/register"/>">
                                     <span>Create an account</span>
                                 </a>
                             </p>
