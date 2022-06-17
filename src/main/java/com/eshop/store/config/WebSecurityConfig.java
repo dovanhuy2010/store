@@ -53,11 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")// mật khẩu trong forrm login
                 .defaultSuccessUrl("/admin")// đường dẫn mặc định sau khi login thành công
                 .failureUrl("/_admin/login?message=error")  // trả về nếu login lỗi
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .deleteCookies("JSESSIONID")
-//                .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403"); //khi không đủ quyền sẽ redirect đến trang 403

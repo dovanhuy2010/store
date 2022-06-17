@@ -7,16 +7,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserRoleDto {
-    int id;
+
     int roleId;
     String roleName;
 
     public UserRole mapperUserRole(int userId){
-        return new UserRole(id,userId,roleId);
+        return new UserRole(null,userId,roleId);
     }
 
-    public UserRoleDto(int id, int roleId, String roleName) {
-        this.id = id;
+    public UserRoleDto(int roleId, String roleName) {
         this.roleId = roleId;
         this.roleName = roleName;
     }

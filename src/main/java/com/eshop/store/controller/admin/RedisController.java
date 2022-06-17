@@ -3,6 +3,7 @@ package com.eshop.store.controller.admin;
 import com.eshop.store.dto.UserDto;
 import com.eshop.store.service.RedisService;
 import com.eshop.store.service.UserService;
+import com.eshop.store.utils.Const;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,16 +32,17 @@ public class RedisController {
     @RequestMapping(value = "/admin/redis/setUesr", method = RequestMethod.POST)
     public ResponseEntity<Boolean> setInforUaer(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String sessionId = session.getId();//id
+        StringBuilder builder = new StringBuilder();
+        builder.append(Const.ACCOUNT_INFO_PREFIX + session.getId());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String email = authentication.getName();
             UserDto userDto =(UserDto) userService.findByEmail(email).getData();
-            redisService.set(sessionId,userDto);
-            logger.info("Save user redis sessionId: {} ", sessionId);
+            redisService.set(builder.toString(),userDto);
+            logger.info("Save user redis sessionId: {} ", builder.toString());
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
-            logger.info("Error save user redis sessionId: {} ", sessionId);
+            logger.info("Error save user redis sessionId: {} ", builder.toString());
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
@@ -48,16 +50,18 @@ public class RedisController {
     @RequestMapping(value = "/admin/redis/getUser", method = RequestMethod.GET)
     public ResponseEntity<UserDto> getUserByKey(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String sessionId = session.getId();//id
-        logger.info("Get User by id : {} ", sessionId);
-        return new ResponseEntity<>(redisService.get(sessionId), HttpStatus.OK);
+        StringBuilder builder = new StringBuilder();
+        builder.append(Const.ACCOUNT_INFO_PREFIX + session.getId());
+        logger.info("Get User by id : {} ", builder.toString());
+        return new ResponseEntity<>(redisService.get(builder.toString()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/admin/redis-check-key", method = RequestMethod.GET)
     public ResponseEntity<Boolean> checkKeyRedis(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String sessionId = session.getId();//id
-        logger.info("Check key exist: {} ", redisService.checkRedis(sessionId));
-        return new ResponseEntity<>(redisService.checkRedis(sessionId), HttpStatus.OK);
+        StringBuilder builder = new StringBuilder();
+        builder.append(Const.ACCOUNT_INFO_PREFIX + session.getId());
+        logger.info("Check key exist: {} ", redisService.checkRedis(builder.toString()));
+        return new ResponseEntity<>(redisService.checkRedis(builder.toString()), HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package com.eshop.store.controller.admin;
 
 import com.eshop.store.dto.DataRes;
 import com.eshop.store.dto.UserDto;
+import com.eshop.store.dto.UserRoleDto;
 import com.eshop.store.service.RoleService;
 import com.eshop.store.service.UserRoleService;
 import com.eshop.store.service.UserService;
@@ -18,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "admin")
@@ -45,9 +50,11 @@ public class AdminUserController {
 
     @RequestMapping(value = "/user/create", method = RequestMethod.GET)
     public String getPageAddUser(Model model) {
+        Set<UserRoleDto> userRoles = new HashSet<>();
         model.addAttribute("listRole", roleService.findAll());
         model.addAttribute("action", "Create");
         model.addAttribute("user", new UserDto());
+        model.addAttribute("userRoles", userRoles);
         return "admin/user/create";
     }
 

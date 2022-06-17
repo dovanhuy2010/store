@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
-    @Query(value = " select new com.eshop.store.dto.UserRoleDto(ur.id, ur.userId, r.roleName)  from UserRole ur " +
+    @Query(value = " select new com.eshop.store.dto.UserRoleDto(ur.userId, r.roleName)  from UserRole ur " +
                     " inner join Role r on r.id = ur.roleId " +
                     " where ur.userId = :userId group by ur.userId")
     List<UserRoleDto> findByUserId(@Param("userId") int userId);

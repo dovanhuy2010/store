@@ -5,13 +5,18 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "User")
+@Table(name = "User",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email")
+        })
 public class User implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
@@ -44,5 +49,21 @@ public class User implements Serializable {
 
     @Transient              // @Transient : khi query t có thể bỏ qua dòng này không query ra
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
-    List<UserRole> userRoleList;
+    // fetch = FetchType.LAZY : chỉ khi nào một user get role thì db mới query listRole
+            List<UserRole> userRoleList;
+
+    //    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "users_role",
+//            joinColumns={@JoinColumn(name="user_id", referencedColumnName="ID")},
+//            inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="ID")}
+//    )
+//    private Set<Role> roles = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "user_role",
+//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "ID")},
+//            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "ID")}
+//    )
+//    private Set<Role> roles = new HashSet<>();
 }

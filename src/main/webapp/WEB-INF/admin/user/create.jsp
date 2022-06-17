@@ -122,23 +122,65 @@
                                             </div>
                                         </div>
 
+
                                             <%--roleName--%>
-<%--                                        <div class="mb-1">--%>
-<%--                                            <label class="form-label" for="idRole">Role</label>--%>
-<%--                                            <form:select class="form-select" id="idRole" path="">--%>
-<%--                                                <c:forEach items="${listRole}" var="role">--%>
-<%--                                                    <option value="${role.id}" name="${role}"--%>
-<%--                                                            <c:if test="${role.id ==user.idRole}">selected</c:if>--%>
-<%--                                                    >${role.roleName}</option>--%>
-<%--                                                </c:forEach>--%>
-<%--                                            </form:select>--%>
-<%--                                        </div>--%>
+                                            <%--                                        <div class="mb-1">--%>
+                                            <%--                                            <label class="form-label" for="idRole">Role</label>--%>
+                                            <%--                                            <form:select class="form-select" id="idRole" path="">--%>
+                                            <%--                                                <c:forEach items="${listRole}" var="role">--%>
+                                            <%--                                                    <option value="${role.id}" name="${role}"--%>
+                                            <%--                                                            <c:if test="${role.id ==user.idRole}">selected</c:if>--%>
+                                            <%--                                                    >${role.roleName}</option>--%>
+                                            <%--                                                </c:forEach>--%>
+                                            <%--                                            </form:select>--%>
+                                            <%--                                        </div>--%>
                                             <%--roleName--%>
 
 
                                     </div>
                                 </form:form>
-
+                                <form:form modelAttribute="userRoles">
+                                    <div class="col-12">
+                                        <div class="table-responsive border rounded mt-1">
+                                            <h6 class="py-1 mx-1 mb-0 font-medium-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                     class="feather feather-lock font-medium-3 me-25">
+                                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                                </svg>
+                                                <span class="align-middle">Permission</span>
+                                            </h6>
+                                            <table class="table table-striped table-borderless">
+                                                <thead class="table-light">
+                                                <tr>
+                                                    <th>User role</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach items="${listRole}" var="roles">
+                                                    <tr>
+                                                        <td>${roles.roleName}</td>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <form:input type="checkbox" class="form-check-input"
+                                                                            id="${roles.id}" value="${roles.roleName}"
+                                                                            path=""
+                                                                           <c:if test="${userRoles.contains(roles)}">checked</c:if>
+                                                                >
+                                                                <label class="form-check-label"
+                                                                       for="${roles.id}"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form:form>
                                 <div class="col-12">
                                     <button onclick="submitFunc(${user.id})" type="reset"
                                             class="btn btn-primary me-1 waves-effect waves-float waves-light">
@@ -215,13 +257,13 @@
 <%--<script src="<c:url value="/template/admin/user/js/createUser.js"/>"/>--%>
 
 
-
 <%--jquery ajax--%>
 <script>
     $(window).on('load', function () {
         if (feather) {
             feather.replace({width: 14, height: 14});
         }
+
     })
 
     $(document).ready(function () {
