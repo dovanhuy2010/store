@@ -1,4 +1,3 @@
-
 function checkKey() {
     $.ajax({
         url: '/admin/redis-check-key',
@@ -34,3 +33,4 @@ function loadUser() {
         $('#user-role').text(data.email);
     });
 }
+

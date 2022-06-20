@@ -17,4 +17,7 @@ public class CommonResource {
     @Value("${spring.redis.port}")
     private int redisPort;
 
+    @Getter
+    @Value("${upload.folder.user}")
+    private static String folderUploadUser;
 }

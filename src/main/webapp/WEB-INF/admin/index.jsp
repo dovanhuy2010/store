@@ -7,7 +7,7 @@
   Time: 11:06 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <html>
 <head>
@@ -201,8 +201,7 @@
                         <div>
                             <div id="form-upload-file"
                                  class="m-dropzone__msg dz-message needsclick file-dropzone m-dropzone dropzone m-dropzone--primary"
-                                 action="/import/upload-file"
-                            >
+                                 action="/import/upload-file">
                                 <h3 class="m-dropzone__msg-title">TẢI FILE</h3>
                             </div>
                             <div class="col-md-4">
@@ -262,12 +261,14 @@
 <%--<script src="<c:url value='/template/admin/js/scripts/pages/dashboard-ecommerce.min.js'/>"></script>--%>
 <!-- END: Page JS-->
 
+<script src="<c:url value='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'/>"></script>
 <!-- BEGIN: CustomizerJS-->
 <script src="<c:url value='/template/admin/js/scripts/customizerJS.js'/>"></script>
-<script src="<c:url value='/template/admin/vendors/dist/js/Dropzone.js'/>"></script>
+<script src="<c:url value='/template/admin/vendors/dist/js/dropzone.js'/>" type="text/javascript"></script>
+<%--<script src="<c:url value='/template/admin/vendors/dist/dropzone.js'/>"></script>--%>
 <script src="<c:url value='/template/admin/vendors/dist/js/dropzone-amd-module.min.js'/>"></script>
 
-<script src="<c:url value='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'/>"></script>
+
 
 
 <!-- END: CustomizerJS-->
@@ -278,65 +279,120 @@
             feather.replace({width: 14, height: 14});
         }
         checkKey();
-        //
 
+        // Dropzone.options.formUploadFile ={
+        //     maxFiles: 1, //chỉ được tải lên 1 file
+        //     addRemoveLinks: true, //điều này sẽ thêm một liên kết đến mọi bản xem trước tệp để xóa hoặc hủy tệp(nếu đã tải lên)
+        //     dictCancelUploadConfirmation: "Bạn có muốn dừng tải file?",
+        //     dictRemoveFile: "Xóa file", //các lựa chọn nếu  addRemoveLinks: true
+        //     timeOut: 360000,//thời gian chờ tải file
+        //     maxFilesize: 512, // dung lượng file tối đa
+        //     success: function (file, res) {
+        //         $('#fileName').val(res.toString());
+        //         alert("File verify success!");
+        //         $('#fileName').val('img_demo');
+        //         if (res != null && res == true) {
+        //             alert("File verify success!");
+        //             $('#fileName').val('img_demo');
+        //         } else {
+        //             alert("File verify error!");
+        //             $('#fileName').val('');
+        //         }
+        //     },
+        //     init: function () {
+        //         this.on('removedfile', function (file) {
+        //             var res;
+        //             alert("File verify success!");
+        //             return (res = file.previewElement) != null ? res.parentNode.removeChild(file.previewElement) : void 0;
+        //         })
+        //         this.on('addedfile', function (file) {
+        //             alert("File verify error!");
+        //             //thêm file thứ 2 sẽ xóa file đầu tiên
+        //             if (this.files.length > 1) {
+        //                 this.removeFile(this.files[0]);
+        //                 this.removedfile(this.files[0]);
+        //             }
+        //         });
+        //         this.on('maxfilesexceeded', function () {
+        //             alert("File verify error!");
+        //             this.removeAllFiles();
+        //             this.addFile(file);
+        //         })
+        //         this.on("success", function (file, res) {
+        //             $('#fileName').val(res.toString());
+        //             alert("File verify success!");
+        //             $('#fileName').val('img_demo');
+        //             if (res != null && res == true) {
+        //                 alert("File verify success!");
+        //                 $('#fileName').val('img_demo');
+        //             } else {
+        //                 alert("File verify error!");
+        //                 $('#fileName').val('');
+        //             }
+        //         })
+        //     }
+        // }
 
     })
 
+
+    //
+
     Dropzone.autoDiscover = false;
-    var MyDropzone = $(".m-dropzone--primary").Dropzone({
+
+    var $dropzone = $(".m-dropzone--primary").dropzone({
         maxFiles: 1, //chỉ được tải lên 1 file
         addRemoveLinks: true, //điều này sẽ thêm một liên kết đến mọi bản xem trước tệp để xóa hoặc hủy tệp(nếu đã tải lên)
         dictCancelUploadConfirmation: "Bạn có muốn dừng tải file?",
         dictRemoveFile: "Xóa file", //các lựa chọn nếu  addRemoveLinks: true
         timeOut: 360000,//thời gian chờ tải file
         maxFilesize: 512, // dung lượng file tối đa
-        success: function (file, res) {
-            $('#fileName').val(res.toString());
-            alert("File verify success!");
-            $('#fileName').val('img_demo');
-            if (res != null && res == true) {
-                alert("File verify success!");
-                $('#fileName').val('img_demo');
-            } else {
-                alert("File verify error!");
-                $('#fileName').val('');
-            }
-        },
+        // success: function (file, res) {
+        //     $('#fileName').val(res.toString());
+        //     alert("File verify success!");
+        //     $('#fileName').val('img_demo');
+        //     if (res != null && res == true) {
+        //         alert("File verify success!");
+        //         $('#fileName').val('img_demo');
+        //     } else {
+        //         alert("File verify error!");
+        //         $('#fileName').val('');
+        //     }
+        // },
         init: function () {
             this.on('removedfile', function (file) {
-                var res;
-                alert("File verify success!");
-                return (res = file.previewElement) != null ? res.parentNode.removeChild(file.previewElement) : void 0;
+                $('#fileName').val('');
+                // var res;
+                // alert("File verify success!");
+                // return (res = file.previewElement) != null ? res.parentNode.removeChild(file.previewElement) : void 0;
             })
             this.on('addedfile', function (file) {
-                alert("File verify error!");
+                // alert("File verify error!");
                 //thêm file thứ 2 sẽ xóa file đầu tiên
                 if (this.files.length > 1) {
+                    alert("File verify success!");
                     this.removeFile(this.files[0]);
-                    this.removedfile(this.files[0]);
                 }
             });
-            this.on('maxfilesexceeded', function () {
+            this.on('maxfilesexceeded', function (file) {
                 alert("File verify error!");
-                this.removeAllFiles();
-                this.addFile(file);
+                if(this.files.length>1){
+                    alert("File verify success!");
+                    this.removeFile(this.files[0]);
+                }
             })
             this.on("success", function (file, res) {
                 $('#fileName').val(res.toString());
-                alert("File verify success!");
-                $('#fileName').val('img_demo');
                 if (res != null && res == true) {
                     alert("File verify success!");
-                    $('#fileName').val('img_demo');
+                    $('#fileName').val(res.toString());
                 } else {
                     alert("File verify error!");
-                    $('#fileName').val('');
                 }
             })
         }
     })
-    var dropzoneObj = MyDropzone.dropzone;
+    var dropzoneObj = $dropzone.dropzone;
 
     function clearFormUploadFiles() {
         $dropzone.removedfile();
@@ -361,7 +417,7 @@
     $(document).on('click', '#popup-btn-upload-file', function () {
         alert("File verify success!");
         // $.ajax({
-        //     url: '/import/save-file',
+        //     url: '/import/save-user',
         //     type: 'POST',
         //     contentType: "application/json",
         //     data: $('#form-upload-file').dropzone()
@@ -375,6 +431,7 @@
         // });
         $('#fileName').val('demo');
     })
+
 
 </script>
 </body>

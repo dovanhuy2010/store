@@ -1,12 +1,10 @@
 package com.eshop.store.utils;
 
 
-import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 public class Const {
 
-    public static final String ACCOUNT_INFO_PREFIX = "acc_info_";
+    public static final String ACCOUNT_INFO_PREFIX = "ACC_INFOR_";
     public static final int ROLE_OTHER = 7;
 
 
